@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const ProductImages = ({ images = [{ url: "" }] }) => {
   const [main, setMain] = useState(images[0]);
-  console.log(images);
   return (
     <Wrapper>
       <img src={main.url} alt="main image" className="main" />
@@ -46,7 +45,7 @@ const Wrapper = styled.section`
     }
   }
   .active {
-    border: 4px solid var(--clr-primary-5);
+    box-shadow: 0px 0px 0px 2px var(--clr-primary-5);
   }
   @media (max-width: 576px) {
     .main {

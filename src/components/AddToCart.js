@@ -5,15 +5,54 @@ import { FaCheck } from "react-icons/fa";
 import { useCartContext } from "../context/cart_context";
 import AmountButtons from "./AmountButtons";
 
-const AddToCart = () => {
+const AddToCart = ({ product }) => {
+  const { id, colors, stock } = product;
+  const [mainColor, setMainColor] = useState(colors[0]);
+  const [amount, setAmount] = useState(1);
+  const { addToCart } = useCartContext();
+  const increase = () => {
+    setAmount((oldAmount) => {
+      const newAmount = oldAmount + 1;
+      return newAmount > stock ? stock : newAmount;
+    });
+  };
+  const decrease = () => {
+    setAmount((oldAmount) => {
+      const newAmount = oldAmount - 1;
+      return newAmount < 1 ? 1 : newAmount;
+    });
+  };
+
   return (
     <Wrapper>
       <div className="colors">
         <span>colors :</span>
-        <button className="color-btn active">
-          <FaCheck />
-        </button>
+        <div>
+          {colors.map((color, index) => {
+            return (
+              <button
+                key={index}
+                style={{ background: color }}
+                className={`color-btn ${mainColor === color && "active"}`}
+                onClick={() => setMainColor(color)}
+              >
+                {mainColor === color && <FaCheck />}
+              </button>
+            );
+          })}
+        </div>
       </div>
+      <div className="btn-container">
+        <AmountButtons
+          increase={increase}
+          decrease={decrease}
+          amount={amount}
+          stock={stock}
+        />
+      </div>
+      <Link onClick={addToCart} onClick={addToCart} className="btn" to="/cart">
+        add to cart
+      </Link>
     </Wrapper>
   );
 };
