@@ -1,4 +1,3 @@
-import { Switch } from "react-router";
 import {
   LOAD_PRODUCTS,
   SET_LISTVIEW,
@@ -126,10 +125,9 @@ const filter_reducer = (state, action) => {
         filtered_products: state.all_products,
       };
     }
+    default:
+      throw new Error(`No Matching "${action.type}" - action type`);
   }
-
-  return state;
-  throw new Error(`No Matching "${action.type}" - action type`);
 };
 
 export default filter_reducer;
